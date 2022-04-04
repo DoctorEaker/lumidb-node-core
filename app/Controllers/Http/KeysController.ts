@@ -11,14 +11,14 @@ export default class KeysController {
         let key = params.id
         LumiDatabaseService.insert(key, "")
         return {
-          [key]: Object.assign({},LumiDatabaseService.getValuesByKey(key))
+          [key]: LumiDatabaseService.getValuesByKey(key)
         }
     }
 
     public async show({ params }: HttpContextContract) {
         let key = params.id
         return {
-          [key]: Object.assign({},LumiDatabaseService.getValuesByKey(key))
+          [key]: LumiDatabaseService.getValuesByKey(key)
         }
     }
 
@@ -29,7 +29,7 @@ export default class KeysController {
     let newKey = request.all().newKey
     LumiDatabaseService.renameKey(oldKey,newKey)
     return {
-      [newKey]: Object.assign({},LumiDatabaseService.getValuesByKey(newKey))
+      [newKey]: LumiDatabaseService.getValuesByKey(newKey)
     }
   }
 
@@ -40,4 +40,6 @@ export default class KeysController {
       entries: LumiDatabaseService.get()
     }
   }
+
+
 }

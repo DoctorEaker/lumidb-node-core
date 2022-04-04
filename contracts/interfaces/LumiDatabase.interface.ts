@@ -9,6 +9,6 @@ export default interface LumiDatabaseInterface{
   updateValue(key:string, index:number, value:string):void
   deleteKey(key:string):void
   deleteValue(key:string,index:number):void
-  getVersion():number
-  setVersion(version:number):void
+  getVersion(key:string):number
+  setVersion(key:string, version:number):void
 }

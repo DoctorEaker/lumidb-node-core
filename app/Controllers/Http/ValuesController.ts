@@ -7,7 +7,7 @@ export default class ValuesController {
     public async index({ params }: HttpContextContract) {
         let key = params.key_id
         return {
-            [key]: Object.assign({}, LumiDatabaseService.getValuesByKey(key))
+            [key]: LumiDatabaseService.getValuesByKey(key)
         }
     }
 
@@ -16,7 +16,7 @@ export default class ValuesController {
         let value = request.all().value
         LumiDatabaseService.insert(key, value)
         return {
-            [key]: Object.assign({}, LumiDatabaseService.getValuesByKey(key))
+            [key]: LumiDatabaseService.getValuesByKey(key)
         }
     }
 
@@ -49,7 +49,7 @@ export default class ValuesController {
         let index = params.id
         LumiDatabaseService.deleteValue(key, index)
         return {
-            [key]: Object.assign({}, LumiDatabaseService.getValuesByKey(key))
+            [key]: LumiDatabaseService.getValuesByKey(key)
         }
     }
 }

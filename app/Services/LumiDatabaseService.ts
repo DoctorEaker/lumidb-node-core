@@ -2,11 +2,11 @@ import LumiDatabaseInterface from 'Contracts/interfaces/LumiDatabase.interface'
 
 export default class LumiDatabaseService implements LumiDatabaseInterface{
   private entries: Record<string,[string]>
-  private version: number
+  private version: Record<string,number>
 
   constructor(){
     this.entries = {}
-    this.version = 0
+    this.version = {}
   }
 
   public get(): Record<string,[string]>{
@@ -25,16 +25,21 @@ export default class LumiDatabaseService implements LumiDatabaseInterface{
     return this.get()[key]
   }
 
-  private increaseVersion(){
-    this.version++
+  private increaseVersion(key:string){
+    if(key in this.version){
+      this.version[key]++
+      return
+    }
+
+    this.version[key] = 1
   }
 
-  public getVersion():number{
-    return this.version
+  public getVersion(key:string):number{
+    return this.version[key]
   }
 
-  public setVersion(version:number){
-    this.version = version
+  public setVersion(key:string, version:number){
+    this.version[key] = version
   }
 
   public insert(key:string , value:string){
@@ -45,27 +50,34 @@ export default class LumiDatabaseService implements LumiDatabaseInterface{
     }
 
     this.entries[key] = [value]
-    this.increaseVersion()
+    this.increaseVersion(key)
   }
 
   public renameKey(oldKey:string, newKey:string){
     this.entries[newKey] = this.entries[oldKey]
     delete this.entries[oldKey]
-    this.increaseVersion()
+    this.version[newKey] = this.version[oldKey]
+    delete this.version[oldKey]
+    this.increaseVersion(newKey)
   }
 
   public updateValue(key:string, index:number, value:string){
     this.entries[key][index]=value
-    this.increaseVersion()
+    this.increaseVersion(key)
   }
 
   public deleteKey(key:string){
     delete this.entries[key]
-    this.increaseVersion()
+    this.increaseVersion[key]
   }
 
   public deleteValue(key:string, index:number){
     this.entries[key].splice(index,1)
-    this.increaseVersion()
+    this.increaseVersion(key)
+  }
+
+  public setKeyVersion(key:string, values: [string], version:number){
+    this.entries[key]=values
+    this.setVersion(key, version)
   }
 }
