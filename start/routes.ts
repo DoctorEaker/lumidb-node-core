@@ -41,4 +41,4 @@ Route.resource('key', 'KeysController').apiOnly().except(['index','store'])
 Route.post('/key/:id','KeysController.store')
 Route.resource('key.values', 'ValuesController').apiOnly().except(['update'])
 
-Route.resource('version','VersionController').only(['index','update'])
+Route.resource('version','VersionController').only(['index','update', 'destroy'])
