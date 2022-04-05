@@ -39,6 +39,6 @@ Route.group(() => {
 
 Route.resource('key', 'KeysController').apiOnly().except(['index','store'])
 Route.post('/key/:id','KeysController.store')
-Route.resource('key.values', 'ValuesController').apiOnly().except(['update'])
+Route.resource('key.values', 'ValuesController').apiOnly()
 
 Route.resource('version','VersionController').only(['show','update', 'destroy'])
