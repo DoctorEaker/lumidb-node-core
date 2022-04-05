@@ -19,12 +19,14 @@ export default class VersionController {
   public async edit({}: HttpContextContract) {}
 
   public async update({params, request}: HttpContextContract) {
-    let key = params.key
+    let key = params.id
     let version = request.all().version
     let values = request.all().values
     LumiDatabaseService.setKeyVersion(key,values,version);
     return {
-      [key]:LumiDatabaseService.getValuesByKey(key)
+      [key]:LumiDatabaseService.getValuesByKey(key),
+      version: version,
+      values:values
     }
   }
 
