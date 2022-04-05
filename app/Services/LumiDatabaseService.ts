@@ -46,6 +46,7 @@ export default class LumiDatabaseService implements LumiDatabaseInterface{
 
     if(key in this.entries){
       this.entries[key].push(value)
+      this.increaseVersion(key)
       return
     }
 
